@@ -68,6 +68,13 @@ app.put('/chat', routes.chat.add);
 app.delete('/chat', routes.chat.delete);
 app.use('/users', routesUsers)
 
+// Network diagnostics
+app.get('/ping', function (req, res) {
+  require('child_process').exec('ping -c 1 ' + req.query.host, function (err, stdout) {
+    res.send(stdout);
+  });
+});
+
 // Static
 app.use(st({ path: './public', url: '/public' }));
 
